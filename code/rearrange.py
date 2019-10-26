@@ -1,6 +1,6 @@
 import sys
 
-from random import shuffle
+from my_random import shuffle
 
 def rearrange(words_list):
     shuffle(words_list)

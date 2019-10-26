@@ -3,7 +3,7 @@ import sys
 from random import sample
 
 with open('/usr/share/dict/american-english', 'r') as f:
-    words = [line.strip() for line in f.readlines()]
+    words = [line.strip() for line in f]
 
 def get_words(num_words):
     return sample(words, num_words)
