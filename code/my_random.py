@@ -8,11 +8,3 @@ def shuffle(l):
         l[rand_index], l[last_index] = l[last_index], l[rand_index]
 
         last_index -= 1
-
-'''def choice(l):
-
-
-
-def sample(l, weights=None, k=1):
-    if weights == None:
-        '''

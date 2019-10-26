@@ -1,6 +1,7 @@
 import sys
 import random
 
+
 def get_words(num_words):
     # 102305 is the number of words in the dict.
     lines = [int(random.random() * 102305) for _ in range(num_words)]
