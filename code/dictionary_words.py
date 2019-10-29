@@ -1,12 +1,12 @@
 import sys
+import random
 
-from random import sample
-
-with open('/usr/share/dict/american-english', 'r') as f:
-    words = [line.strip() for line in f]
 
 def get_words(num_words):
-    return sample(words, num_words)
+    # 102305 is the number of words in the dict.
+    lines = [int(random.random() * 102305) for _ in range(num_words)]
+    with open('/usr/share/dict/american-english', 'r') as f:
+        return [line.strip() for index, line in enumerate(f) if index in lines]
 
 
 if __name__ == '__main__':
