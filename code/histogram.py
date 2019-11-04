@@ -1,4 +1,6 @@
-from collections import defaultdict
+import random
+
+from collections import defaultdict, deque
 
 
 
@@ -6,9 +8,12 @@ class Histogram:
     def __init__(self):
         self.unique_words = 0
         self.num_words = 0
-        self.hist = defaultdict(lambda: _incrememnt_unique())
+        self.hist = defaultdict(lambda: self._increment_unique())
 
-    def _incrememnt_unique(self):
+    def __len__(self):
+        return self.unique_words
+
+    def _increment_unique(self):
         self.unique_words += 1
         return 0
 
@@ -16,7 +21,7 @@ class Histogram:
     def _open_file(filepath):
         f = open(filepath, 'r')
         for line in f:
-            for word in line:
+            for word in line.split():
                 yield word
 
     def build_histogram(self, filepath):
@@ -30,9 +35,8 @@ class Histogram:
     def get_ordered(self):
         running_sum = 0.0
         for word, freq in self.hist.items():
-            running_sum += freq / num_words
+            running_sum += freq / self.num_words
             yield word, running_sum
-
 
 
 class Node:
@@ -46,24 +50,64 @@ class Node:
 class WordFreqTree:
     def __init__(self):
         self.root = None
+        self.length = 0
 
-    def _add(self, new_node, current_node=None):
-        if current_node is None:
-            current_node = self.root
+    def add(self, new_node):
+        current = self.root
 
-        if new_node.freq < current_node.freq:
-            if current_node.left is not None:
-                self._add(new_node, current_node.left)
+        while True:
+            if new_node.freq < current.freq:
+                if current.left is None:
+                    current.left = new_node
+                    break
+
+                else:
+                    current = current.left
 
             else:
-                current_node.left = new_node
+                if current.right is None:
+                    current.right = new_node
+                    break
+
+                else:
+                    current = current.right
+
+    def __len__(self):
+        return self.length
+
+
+    def _find_word(self, val, node):
+        if val < node.freq:
+            if node.left is None:
+                return node.word
+
+            self._find_word(val, node.left)
 
         else:
-            if current_node.right is not None:
-                self._add(new_node, current_node.right)
+            if node.right is None:
+                return node.word
+
+            self._find_word(val, node.right)
+
+
+    def sample(self):
+        rand = random.random()
+        if self.root is None:
+            raise ValueError('Tree not built yet, try build_tree')
+
+        current = self.root
+        while True:
+            if rand < current.freq:
+                if current.left is None:
+                    return current.word
+
+                current = current.left
 
             else:
-                current_node.right = new_node
+                if current.right is None:
+                    return current.word
+
+                current = current.right
 
 
     def build_tree(self, hist):
@@ -89,5 +133,6 @@ class WordFreqTree:
 
         for word, freq in stack:
             node = Node(word, freq)
-            self._add(node)
+            self.length += 1
+            self.add(node)
 
