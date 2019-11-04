@@ -9,3 +9,10 @@ def shuffle(l):
 
         last_index -= 1
 
+'''def choice(l):
+
+
+
+def sample(l, weights=None, k=1):
+    if weights == None:
+        '''
