@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+
+{% block container %}
+
+<h4>This is a random words generator</h4>
+
+<form method='POST' action='/more-words'>
+	<input type='text' name='num-words'>
+
+	<input type='submit'>
+
+</form>
+
+{% endblock %}
