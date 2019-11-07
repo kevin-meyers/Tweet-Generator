@@ -84,8 +84,10 @@ class WordFreqTree:
         '''
         queue = deque(sorted_words_freq_tuple)
         stack = deque()
+
         if len(queue) % 2 != 0:
-            stack.append(queue.pop())
+            stack.appendleft(queue.pop())
+
 
         while len(queue) > 0:
             stack.appendleft(queue.popleft())
@@ -94,7 +96,7 @@ class WordFreqTree:
         if self.root is None:
             self.root = Node(*stack.popleft())
 
-        for word, freq in stack:
+        for num, (word, freq) in enumerate(stack):
             node = Node(word, freq)
             self.length += 1
             self.add(node)
