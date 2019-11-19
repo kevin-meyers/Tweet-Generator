@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 
 from code.histogram import Histogram
-from code.sample import WordFreqTree
+from code.word_freq_tree import WordFreqTree
 
 from random import shuffle
 
