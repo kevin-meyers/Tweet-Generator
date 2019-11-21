@@ -1,4 +1,4 @@
-from key_defaultdict import KeyDefaultDict
+from utils.key_defaultdict import KeyDefaultDict
 from histogram import Histogram
 from word_freq_tree import WordFreqTree
 
@@ -71,7 +71,7 @@ if __name__ == '__main__':
     word_node = mc.start.transitions_tree.sample()
     words = 0
 
-    while word_node.word is not END_TAG and words < 15:
+    while word_node.word is not END_TAG:
         print(word_node.word)
         words += 1
         word_node = word_node.transitions_tree.sample()

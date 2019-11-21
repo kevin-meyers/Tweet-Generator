@@ -7,6 +7,7 @@ class Node(object):
         """Initialize this node with the given data."""
         self.data = data
         self.next = None
+        self.previous = None
 
     def __repr__(self):
         """Return a string representation of this node."""
@@ -20,6 +21,7 @@ class LinkedList(object):
         self.head = None  # First node
         self.tail = None  # Last node
         # Append given items
+        self.count = 0
         if items is not None:
             for item in items:
                 self.append(item)
@@ -55,35 +57,85 @@ class LinkedList(object):
     def length(self):
         """Return the length of this linked list by traversing its nodes.
         TODO: Running time: O(???) Why and under what conditions?"""
-        # TODO: Loop through all nodes and count one for each
+        return self.count
 
     def append(self, item):
         """Insert the given item at the tail of this linked list.
         TODO: Running time: O(???) Why and under what conditions?"""
-        # TODO: Create new node to hold given item
-        # TODO: Append node after tail, if it exists
+
+        node = Node(item)
+        if self.is_empty():
+            self.head = node
+            self.tail = node
+
+        else:
+            self.tail.next = node
+            node.previous = self.tail
+            self.tail = node
+
+        self.count += 1
+
 
     def prepend(self, item):
         """Insert the given item at the head of this linked list.
         TODO: Running time: O(???) Why and under what conditions?"""
-        # TODO: Create new node to hold given item
-        # TODO: Prepend node before head, if it exists
+
+        node = Node(item)
+        if self.is_empty():
+            self.head = node
+            self.tail = node
+
+        else:
+            self.head.previous = node
+            node.next = self.head
+            self.head = node
+
+        self.count += 1
 
     def find(self, quality):
         """Return an item from this linked list satisfying the given quality.
         TODO: Best case running time: O(???) Why and under what conditions?
         TODO: Worst case running time: O(???) Why and under what conditions?"""
-        # TODO: Loop through all nodes to find item where quality(item) is True
-        # TODO: Check if node's data satisfies given quality function
+        current = self.head
+        while current:
+            if quality(current.data):
+                return current.data
+
+            current = current.next
+
 
     def delete(self, item):
         """Delete the given item from this linked list, or raise ValueError.
         TODO: Best case running time: O(???) Why and under what conditions?
         TODO: Worst case running time: O(???) Why and under what conditions?"""
-        # TODO: Loop through all nodes to find one whose data matches given item
-        # TODO: Update previous node to skip around node with matching data
-        # TODO: Otherwise raise error to tell user that delete has failed
-        # Hint: raise ValueError('Item not found: {}'.format(item))
+
+        current = self.head
+        while current:
+            if current.data == item:
+                break
+
+            current = current.next
+
+        if current is None:
+            raise ValueError(f'Item not found: {item}')
+
+        if current.previous is None:
+            self.head = current.next
+
+        else:
+            current.previous.next = None
+
+        if current.next is None:
+            self.tail = current.previous
+
+        else:
+            current.next.previous = None
+
+        if current.previous and current.next:
+            current.previous.next = current.next
+            current.next.previous = current.previous
+
+        self.count -= 1
 
 
 def test_linked_list():
@@ -101,7 +153,7 @@ def test_linked_list():
     print('length: {}'.format(ll.length()))
 
     # Enable this after implementing delete method
-    delete_implemented = False
+    delete_implemented = True
     if delete_implemented:
         print('\nTesting delete:')
         for item in ['B', 'C', 'A']:
@@ -112,6 +164,7 @@ def test_linked_list():
         print('head: {}'.format(ll.head))
         print('tail: {}'.format(ll.tail))
         print('length: {}'.format(ll.length()))
+
 
 
 if __name__ == '__main__':

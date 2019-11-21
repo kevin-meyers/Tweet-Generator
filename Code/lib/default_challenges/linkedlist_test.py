@@ -155,6 +155,7 @@ class LinkedListTest(unittest.TestCase):
         assert ll.head.data == 'B'  # Unchanged
         assert ll.tail.data == 'B'  # New tail
         ll.delete('B')
+        print(ll.head)
         assert ll.head is None  # No head
         assert ll.tail is None  # No tail
         # Delete should raise error if item was already deleted
