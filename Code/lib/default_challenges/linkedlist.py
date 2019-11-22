@@ -35,6 +35,25 @@ class LinkedList(object):
         """Return a string representation of this linked list."""
         return 'LinkedList({!r})'.format(self.items())
 
+    def __iter__(self):
+        current = self.head
+        while current:
+            yield current
+            current = current.next
+
+    def replace(self, old_item, new_item):
+        """O(1) to O(n) same as find"""
+        current = self.head
+        while current:
+            if current.data == old_item:
+                current.data == new_item
+
+            current = current.next
+
+        if current is None:
+            raise ValueError(f'Item not found: {old_item}')
+
+
     def items(self):
         """Return a list (dynamic array) of all items in this linked list.
         Best and worst case running time: O(n) for n items in the list (length)
@@ -56,12 +75,12 @@ class LinkedList(object):
 
     def length(self):
         """Return the length of this linked list by traversing its nodes.
-        TODO: Running time: O(???) Why and under what conditions?"""
+        TODO: Running time: O(1) Just calls self.count"""
         return self.count
 
     def append(self, item):
         """Insert the given item at the tail of this linked list.
-        TODO: Running time: O(???) Why and under what conditions?"""
+        TODO: Running time: O(1) always 1 because tail is stored"""
 
         node = Node(item)
         if self.is_empty():
@@ -78,7 +97,7 @@ class LinkedList(object):
 
     def prepend(self, item):
         """Insert the given item at the head of this linked list.
-        TODO: Running time: O(???) Why and under what conditions?"""
+        TODO: Running time: O(1) Same as append but with head"""
 
         node = Node(item)
         if self.is_empty():
@@ -94,8 +113,8 @@ class LinkedList(object):
 
     def find(self, quality):
         """Return an item from this linked list satisfying the given quality.
-        TODO: Best case running time: O(???) Why and under what conditions?
-        TODO: Worst case running time: O(???) Why and under what conditions?"""
+        TODO: Best case running time: O(1) it could be at the beginning
+        TODO: Worst case running time: O(n) at the end of the list"""
         current = self.head
         while current:
             if quality(current.data):
@@ -106,8 +125,8 @@ class LinkedList(object):
 
     def delete(self, item):
         """Delete the given item from this linked list, or raise ValueError.
-        TODO: Best case running time: O(???) Why and under what conditions?
-        TODO: Worst case running time: O(???) Why and under what conditions?"""
+        TODO: Best case running time: O(1) same as find
+        TODO: Worst case running time: O(n) same as find"""
 
         current = self.head
         while current:
