@@ -1,4 +1,3 @@
-from dictogram import Dictogram
 
 
 START_TOKEN = '#START'
@@ -43,6 +42,10 @@ class MarkovChain(dict):
 
 
 if __name__ == '__main__':
+    from dictogram import Dictogram
     mv = MarkovChain()
     mv.build_markov('data/test.txt')
     print(list(mv.generate_sentence()))
+
+else:
+    from .dictogram import Dictogram
