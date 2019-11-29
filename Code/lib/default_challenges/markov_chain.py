@@ -15,7 +15,6 @@ class MarkovChain(dict):
 
         return self[key]
 
-
     @staticmethod
     def get_words_list(path_to_file):
         f = open(path_to_file, 'r')
