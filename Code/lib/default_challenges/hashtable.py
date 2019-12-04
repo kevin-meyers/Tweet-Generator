@@ -91,6 +91,9 @@ class HashTable(object):
 
         raise KeyError('Key not found: {}'.format(key))
 
+    def __getitem__(self, key):
+        return self.get(key)
+
     def set(self, key, value):
         """Insert or update the given key with its associated value.
         TODO: Running time: O(???) Why and under what conditions?"""
@@ -101,6 +104,10 @@ class HashTable(object):
         else:
             bucket.append(KV_pair(key=key, value=value))
             self.count += 1
+
+    def __setitem__(self, key, value):
+        self.set(key, value)
+
 
     def delete(self, key):
         """Delete the given key from this hash table, or raise KeyError.
