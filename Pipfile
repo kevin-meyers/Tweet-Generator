@@ -10,6 +10,7 @@ flask = "*"
 ipython = "*"
 unidecode = "*"
 gunicorn = "*"
+data-structs = {git = "https://github.com/kevin-meyers/data-struct-algo"}
 
 [requires]
 python_version = "3.7"
