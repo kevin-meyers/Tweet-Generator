@@ -25,21 +25,25 @@ class MarkovChain(dict):
 
             yield END_TOKEN
 
+    def _new_start(self, words_gen, previous_n):
+        previous_n.empty()
+        for _ in range(self.n):
+            previous_n.enqueue(next(words_gen))
+
+        self[START_TOKEN].add_count(previous_n)
+
+
     def build_markov(self, path_to_file):
         previous_n = CircularBuffer(fixed_size=self.n)
         words = self.get_words_list(path_to_file)
 
         for word in words:
             if word is START_TOKEN:
-                previous_n.empty()
-                for _ in range(self.n):
-                    previous_n.enqueue(next(words))
-
-                self[START_TOKEN].add_count(previous_n)
-                print(previous_n)
+                self._new_start(words, previous_n)
                 continue
 
             self[previous_n].add_count(word)
+            print(self)
             previous_n.enqueue(word)
 
     def generate_sentence(self):
@@ -62,7 +66,7 @@ if __name__ == '__main__':
     mv.build_markov('data/test.txt')
     #for word in mv.get_words_list('data/test.txt'):
      #   print(word)
-    print(mv[START_TOKEN])
+    # print(mv)
     #print(list(mv.generate_sentence()))
 
 else:
