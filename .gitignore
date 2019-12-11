@@ -54,6 +54,7 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+.gitignore
 
 # End of https://www.gitignore.io/api/macos,python
 data/
