@@ -7,15 +7,16 @@ from random import shuffle
 app = Flask(__name__)
 
 
-mv = MarkovChain()
-mv.build_markov('data/sherlock_holmes.txt')
-
-
-#@app.route('/')
-#def home():
-#    return render_template('index.html')
-
 
 @app.route('/')
-def markov_sentence():
-    return str(list(mv.generate_sentence()))
+def home():
+    return render_template('index.html')
+
+
+@app.route('/returned', methods=['POST'])
+def r():
+    mv = MarkovChain(int(request.form.get('n')))
+    mv.build_markov('data/sherlock_holmes.txt')
+
+
+    return ' '.join(mv.generate_sentence())
